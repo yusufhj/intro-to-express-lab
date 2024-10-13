@@ -6,6 +6,10 @@ app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
 
+app.get('/', (req, res) => {
+    res.send('');
+});
+
 app.get('/greetings/:username', (req, res) => {
     res.send(`Hello there ${req.params.username}!`);
 });
@@ -14,9 +18,8 @@ app.get('/roll/:num', (req, res) => {
     if (isNaN(req.params.num)) {
         res.send('You must specify a number.');
     } else {
-        let num = req.params.num;
-        let roll = Math.floor(Math.random() * num) + 1;
-        res.send(`You rolled a ${roll}`);
+        let num = Math.floor(Math.random() * req.params.num) + 1;
+        res.send(`You rolled a ${num}`);
     }
 });
 
@@ -73,7 +76,7 @@ app.get('/shoes', (req, res) => {
         string += `${i+1}: Name: ${filteredShoes[i].name}, Price: ${filteredShoes[i].price}, Type: ${filteredShoes[i].type} <br>`;
     }
     res.send(string);
-    
+
     // to test:
     // http://localhost:3000/shoes?min_price=50&max_price=500&type=sneaker
     // http://localhost:3000/shoes?min_price=50&max_price=500
